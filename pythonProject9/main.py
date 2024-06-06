@@ -3,12 +3,15 @@ from flask_cors import CORS
 import sqlite3
 import random
 import base64
+import os
 
+SQLITE_PATH = os.getenv("SQLITE_PATH", "./database.db")
+PORT = int(os.getenv("PORT", 5000))
 app = Flask(__name__)
 CORS(app)
+conn = sqlite3.connect(SQLITE_PATH)
 
 def get_result_from_first_db(number_of_people, location, type_of_food):
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM '1시간 식사' WHERE 인원=? AND 위치=? AND 음식종류=?", (number_of_people, location, type_of_food))
     results = c.fetchall()
@@ -25,7 +28,6 @@ def get_result_from_first_db(number_of_people, location, type_of_food):
 
 
 def get_result_from_second_db(location):
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `30분~1시간 식사` WHERE 위치=?", (location,))
     results = c.fetchall()
@@ -40,7 +42,6 @@ def get_result_from_second_db(location):
         return None
 
 def get_result_from_third_db():
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `우주공강 놀래`")
     results = c.fetchall()
@@ -54,7 +55,6 @@ def get_result_from_third_db():
     else:
         return None
 def get_result_from_4th_db(location):
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `1시간 놀래` WHERE 위치=?", (location,))
     results = c.fetchall()
@@ -68,7 +68,6 @@ def get_result_from_4th_db(location):
     else:
         return None
 def get_result_from_5th_db():
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `30분~1시간 놀래` ")
     results = c.fetchall()
@@ -83,7 +82,6 @@ def get_result_from_5th_db():
         return None
 
 def get_result_from_6th_db():
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `30분~1시간 쉴래` ")
     results = c.fetchall()
@@ -98,7 +96,6 @@ def get_result_from_6th_db():
         return None
 
 def get_result_from_7th_db(location):
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `1시간 쉴래(카페)` WHERE 위치=?", (location,))
     results = c.fetchall()
@@ -113,7 +110,6 @@ def get_result_from_7th_db(location):
         return None
 
 def get_result_from_8th_db():
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `30분~1시간 공부할래` ")
     results = c.fetchall()
@@ -128,7 +124,6 @@ def get_result_from_8th_db():
         return None
 
 def get_result_from_9th_db(location):
-    conn = sqlite3.connect(r"C:\Users\ins55\OneDrive\바탕 화면\database.db")
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `1시간 공부(카페)` WHERE 위치=?", (location,))
     results = c.fetchall()
@@ -258,4 +253,4 @@ def search():
     return jsonify({'result': result[0]}) if result else jsonify({'error': 'No results found'}), 404
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=PORT)
