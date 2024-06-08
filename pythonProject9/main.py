@@ -9,135 +9,146 @@ SQLITE_PATH = os.getenv("SQLITE_PATH", "./database.db")
 PORT = int(os.getenv("PORT", 5000))
 app = Flask(__name__)
 CORS(app)
-conn = sqlite3.connect(SQLITE_PATH)
+conn = sqlite3.connect(SQLITE_PATH, check_same_thread=False)
+
 
 def get_result_from_first_db(number_of_people, location, type_of_food):
     c = conn.cursor()
-    c.execute("SELECT 결과값, 사진 FROM '1시간 식사' WHERE 인원=? AND 위치=? AND 음식종류=?", (number_of_people, location, type_of_food))
+    c.execute(
+        "SELECT 결과값, 사진 FROM '1시간 식사' WHERE 인원=? AND 위치=? AND 음식종류=?",
+        (number_of_people,
+         location,
+         type_of_food))
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
-
 
 
 def get_result_from_second_db(location):
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `30분~1시간 식사` WHERE 위치=?", (location,))
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
+
 
 def get_result_from_third_db():
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `우주공강 놀래`")
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
+
+
 def get_result_from_4th_db(location):
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `1시간 놀래` WHERE 위치=?", (location,))
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
+
+
 def get_result_from_5th_db():
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `30분~1시간 놀래` ")
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
+
 
 def get_result_from_6th_db():
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `30분~1시간 쉴래` ")
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
+
 
 def get_result_from_7th_db(location):
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `1시간 쉴래(카페)` WHERE 위치=?", (location,))
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
+
 
 def get_result_from_8th_db():
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `30분~1시간 공부할래` ")
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
+
 
 def get_result_from_9th_db(location):
     c = conn.cursor()
     c.execute("SELECT 결과값, 사진 FROM `1시간 공부(카페)` WHERE 위치=?", (location,))
     results = c.fetchall()
-    conn.close()
 
     if results:
         result = random.choice(results)
         결과값, 이미지 = result
-        이미지_base64 = base64.b64encode(이미지).decode('utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
+        이미지_base64 = base64.b64encode(이미지).decode(
+            'utf-8')  # 이미지를 Base64로 인코딩하고 문자열로 디코딩
         return (결과값, 이미지_base64)
     else:
         return None
-
-
 
 
 @app.route('/search', methods=['GET'])
@@ -149,17 +160,19 @@ def search():
         type_of_food = request.args.get('type_of_food')
 
         if not (number_of_people and location and type_of_food):
-            return jsonify({'error': 'Missing data for number_of_people, location, or type_of_food'}), 400
+            return jsonify(
+                {'error': 'Missing data for number_of_people, location, or type_of_food'}), 400
 
-        result = get_result_from_first_db(number_of_people, location, type_of_food)
+        result = get_result_from_first_db(
+            number_of_people, location, type_of_food)
 
         if result:
             result_value, image_base64 = result
             # 결과값과 Base64로 인코딩된 이미지를 JSON 형태로 클라이언트에 전송
-            return jsonify({'result_value': result_value, 'image': image_base64})
+            return jsonify(
+                {'result_value': result_value, 'image': image_base64})
         else:
             return jsonify({'error': 'No results found'}), 404
-
 
     elif mode == '2':
 
@@ -183,8 +196,6 @@ def search():
             return jsonify({'result': 결과값, 'image': 이미지_base64})
         else:
             return jsonify({'error': 'No results found'}), 404
-
-
 
     elif mode == '4':
 
@@ -250,7 +261,9 @@ def search():
     else:
         return jsonify({'error': 'Invalid or missing mode parameter'}), 400
 
-    return jsonify({'result': result[0]}) if result else jsonify({'error': 'No results found'}), 404
+    return jsonify({'result': result[0]}) if result else jsonify(
+        {'error': 'No results found'}), 404
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=PORT)
